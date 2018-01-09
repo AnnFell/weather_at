@@ -1,19 +1,83 @@
 * {
+    --yellow: #ffde00;
+    --lightgrey: #f9f8f3;
+    --darkgrey: #f2f1ea;
+    --black: #000000;
+    --white: white;
+}
+* {
     padding:0;
     margin:0;
 }
-body {
-    background-color:darkgrey;
-    background-image: url('https://static.pexels.com/photos/5865/healthy-spring-young-green-5865.jpg');
-    background-position: center center;
-    font-family: 'Prata', serif;
-    padding:30px;
+body, html {
+    box-sizing:border-box;
 }
 
-.forecast {
-    background: rgba(255,255,255,0.5);
+body {
+    background-color:var(--lightgrey);
+    font-family: 'Oxygen', serif;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-rows:repeat(auto-fit, minmax(200px, 1fr));
+    grid-column-gap: 20px;
+    grid-row-gap: 20px;
+    align-items: stretch;
+    justify-content: stretch;
+    align-content: stretch;
+    grid-auto-flow: dense;
     padding:20px;
 }
+
+i {
+    margin-right:10px;
+}
+.grid {
+    background-color: var(--white);
+    padding:20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .temp {
-    font-size: 150px;
+    background-color: var(--yellow);
+    font-size: 5vw;
+}
+.date {
+    font-size: 3vw;
+    font-style: italic;
+}
+.windforce{
+
+}
+.windDirection {
+    grid-column-start: span 2;
+    grid-row-start: span 2;
+    padding:10px;
+    background-color: rgba(0,0,0,0);
+}
+.compass {
+    border:0px solid var(--black);
+    background-color: var(--white);
+    border-radius: 100%;
+    min-width:200px;
+    min-height:200px;
+    position: relative;
+    background-image: url('compass2.svg');
+    background-size: contain;
+    background-position: center center;
+}
+.hand {
+    width:50%;
+    height:3px;
+    background:black;
+    position: absolute;
+    top:50%;
+    transform: rotate(90deg);
+    /*transition: all 0.05s;*/
+    transition-timing-function: cubic-bezier(0.09, 1.42, 0.46, 1.25);
+    transform-origin: 100% 50%;
+  }
+.googleFontSample{
+    font-size: 20px;
+    grid-column-start: span 3;
 }

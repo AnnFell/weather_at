@@ -1,10 +1,17 @@
 window.addEventListener('load', function () {
 
+  document.querySelector('.hi').innerHTML += "<p>Hallo,<br><strong>Annelotte<strong></p>";
+
+
   //get the date
   function time() {
     const d = new Date();
+    const minutes = d.getMinutes();
+    const seconds = d.getSeconds();
     const timeDiv = document.querySelector('.time');
-    timeDiv.innerHTML = `${d.getDate()}-${d.getMonth() + 1}-${d.getFullYear()} ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`;
+    const dateDiv = document.querySelector('.date');
+    dateDiv.innerHTML = `${d.getDate()}-${d.getMonth() + 1}-${d.getFullYear()}`;
+    timeDiv.innerHTML = `${d.getHours()}:${minutes}:${seconds}`;
     setTimeout(time, 1000);
   }
   time();
@@ -21,7 +28,6 @@ window.addEventListener('load', function () {
 
   const tempDiv = document.querySelector('.temp');
   const humidityDiv = document.querySelector('.humidity');
-  const winddirectionDiv = document.querySelector('.winddirection');
   const rainDiv = document.querySelector('.rain');
   const windforceDiv = document.querySelector('.windforce');
 
@@ -30,34 +36,48 @@ window.addEventListener('load', function () {
     const weerLeeuwarden = actueelWeer[25];
     console.log(weerLeeuwarden);
 
+    tempDiv.innerHTML += `${weerLeeuwarden.temperatuur10cm}&deg;C`;
+    humidityDiv.innerHTML += `Luchtvochtigheid:<br> ${weerLeeuwarden.luchtvochtigheid}%`;
+    weerLeeuwarden.regenMMPU === "-" ? rainDiv.innerHTML += '<i class="fa fa-tint" aria-hidden="true"></i> 0 mm per uur' : rainDiv.innerHTML += `<i class="fa fa-tint" aria-hidden="true"></i> ${weerLeeuwarden.regenMMPU}mm per uur`;
+    windforceDiv.innerHTML += `Wind:<br>${weerLeeuwarden.windsnelheidBF} ${weerLeeuwarden.windrichting}`;
 
-    tempDiv.innerHTML += `${weerLeeuwarden.temperatuur10cm}&#x2103;`;
-    humidityDiv.innerHTML += `Luchtvochtigheid: ${weerLeeuwarden.luchtvochtigheid}%`;
-    weerLeeuwarden.regenMMPU === "-" ? rainDiv.innerHTML += 'Neerslag: 0 mm per uur' : rainDiv.innerHTML += `Neerslag: ${weerLeeuwarden.regenMMPU}mm per uur`;
-    winddirectionDiv.innerHTML += `Windrichting: ${weerLeeuwarden.windrichting}`;
-    windforceDiv.innerHTML += `Windkracht: ${weerLeeuwarden.windsnelheidBF}`;
+    const hand = document.querySelector('.hand');
+    hand.style.transform = `rotate(${Number(weerLeeuwarden.windrichtingGR) + 90}deg)`;
+    console.log(Number(weerLeeuwarden.windrichtingGR));
+
   }
 
   //Google fonts api
-  let fontsJSON;
+  let fontsJSON = [];
   fetch('https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyCpzoJ552LlaWQyYh4LTYHM9mZLziZBBCc')
     .then(data => data.json())
     .then(data => {
       console.log(data);
-      fontsJSON = data;
+      fontsJSON.push(...data.items);
+      console.log(fontsJSON);
       randomFont();
     });
 
   function randomFont() {
-    const random = getRandomInt(0, fontsJSON.items.length);
-    console.log(random);
-    //const randomSelectedFont = fontsJSON.item.filter(x => x == random);
-    //console.log(randomSelectedFont);
+    const random = getRandomInt(0, fontsJSON.length);
+    const fontObject = fontsJSON[random];
+    console.log(fontObject);
+
+    const headStyles = document.querySelector('style')
+    headStyles.innerHTML += `@font-face {font-family: ${fontObject.family}; src: url(${fontObject.files.regular})`;
+    const fontDiv = document.querySelector('.googleFontSample');
+    fontDiv.style.fontFamily = `"${fontObject.family}"`;
+    const fontDivTitle = document.querySelector('.fontName');
+    fontDivTitle.innerHTML += `Font family: ${fontObject.family}<br>Varianten: ${fontObject.variants.join(", ")}`;
+
   }
 
   function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
+  if (!navigator.onLine) {
+    tempDiv.innerHTML = "Geen verbinding";
+  };
 
 });

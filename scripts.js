@@ -6,8 +6,8 @@ window.addEventListener('load', function () {
   //get the date
   function time() {
     const d = new Date();
-    const minutes = d.getMinutes();
-    const seconds = d.getSeconds();
+    let minutes = addZero(d.getMinutes());
+    let seconds = addZero(d.getSeconds());
     const timeDiv = document.querySelector('.time');
     const dateDiv = document.querySelector('.date');
     dateDiv.innerHTML = `${d.getDate()}-${d.getMonth() + 1}-${d.getFullYear()}`;
@@ -15,6 +15,12 @@ window.addEventListener('load', function () {
     setTimeout(time, 1000);
   }
   time();
+  function addZero(i) {
+    if (i < 10) {
+      i = "0" + i;
+    }
+    return i;
+  }
 
   //get weather data from buienradar
   let weer;

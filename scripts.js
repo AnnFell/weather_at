@@ -29,7 +29,7 @@ window.addEventListener('load', function () {
     .then(data => {
       console.log(data);
       weer = data;
-      acties();
+      actiesWeerData();
     });
 
   const tempDiv = document.querySelector('.temp');
@@ -37,7 +37,7 @@ window.addEventListener('load', function () {
   const rainDiv = document.querySelector('.rain');
   const windforceDiv = document.querySelector('.windforce');
 
-  function acties() {
+  function actiesWeerData() {
     const actueelWeer = weer.buienradarnl.weergegevens.actueel_weer.weerstations.weerstation;
     const weerLeeuwarden = actueelWeer[25];
     console.log(weerLeeuwarden);
@@ -50,7 +50,6 @@ window.addEventListener('load', function () {
     const hand = document.querySelector('.hand');
     hand.style.transform = `rotate(${Number(weerLeeuwarden.windrichtingGR) + 90}deg)`;
     console.log(Number(weerLeeuwarden.windrichtingGR));
-
   }
 
   //Google fonts api

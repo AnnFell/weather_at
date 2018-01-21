@@ -15,7 +15,7 @@ body, html {
 
 body {
     background-color:var(--lightgrey);
-    font-family: 'Oxygen', serif;
+    font-family: 'Oxygen', sans-serif;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     grid-template-rows:repeat(auto-fit, minmax(200px, 1fr));
@@ -56,7 +56,6 @@ i {
     background-color: rgba(0,0,0,0);
 }
 .compass {
-    border:0px solid var(--black);
     background-color: var(--white);
     border-radius: 100%;
     min-width:200px;
@@ -67,15 +66,16 @@ i {
     background-position: center center;
 }
 .hand {
-    width:50%;
-    height:3px;
-    background:black;
+    width:80%;
+    margin: 10% 10%;
+    height:80%;
     position: absolute;
-    top:50%;
     transform: rotate(90deg);
-    /*transition: all 0.05s;*/
+    background-image: url("arrow.svg");
+    background-position: center center;
+    background-repeat: no-repeat;
+    transition: all 0.05s;
     transition-timing-function: cubic-bezier(0.09, 1.42, 0.46, 1.25);
-    transform-origin: 100% 50%;
   }
 .googleFontSample{
     font-size: 20px;

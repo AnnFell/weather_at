@@ -50,9 +50,10 @@ i {
 
 }
 .windDirection {
-    grid-column-start: span 2;
-    grid-row-start: span 2;
-    padding:10px;
+    /*grid-column-start: span 2;*/
+    /*grid-row-start: span 2;*/
+    /*padding:10px;*/
+    padding:0;
     background-color: rgba(0,0,0,0);
 }
 .compass {
@@ -61,7 +62,7 @@ i {
     min-width:200px;
     min-height:200px;
     position: relative;
-    background-image: url('compass2.svg');
+    background-image: url('compass.svg');
     background-size: contain;
     background-position: center center;
 }

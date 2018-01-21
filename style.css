@@ -65,7 +65,7 @@ i {
     background-size: contain;
     background-position: center center;
 }
-.hand {
+.compass__hand {
     width:80%;
     margin: 10% 10%;
     height:80%;
@@ -76,7 +76,21 @@ i {
     background-repeat: no-repeat;
     transition: all 0.05s;
     transition-timing-function: cubic-bezier(0.09, 1.42, 0.46, 1.25);
-  }
+}
+.compass__force {
+    position:absolute;
+    height:14%;
+    width:14%;
+    border-radius: 100px;
+    border: 2px solid var(--black);
+    background-color: var(--white);
+    top:43%;
+    left:43%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+}
 .googleFontSample{
     font-size: 20px;
     grid-column-start: span 3;

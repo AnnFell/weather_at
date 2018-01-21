@@ -32,27 +32,29 @@ window.addEventListener('load', function () {
       actiesWeerData();
     });
 
-  const tempDiv = document.querySelector('.temp');
-  const humidityDiv = document.querySelector('.humidity');
-  const rainDiv = document.querySelector('.rain');
-  const windforceDiv = document.querySelector('.windforce');
-
   function actiesWeerData() {
+    // weergegevens voor Leeuwarden uit weerdata halen
     const actueelWeer = weer.buienradarnl.weergegevens.actueel_weer.weerstations.weerstation;
     const weerLeeuwarden = actueelWeer[25];
-    console.log(weerLeeuwarden);
+    //console.log(weerLeeuwarden);
 
+    // data voor temperatuur, luchtvochtigheid en regen in gridblokjes zetten
+    const tempDiv = document.querySelector('.temp');
+    const humidityDiv = document.querySelector('.humidity');
+    const rainDiv = document.querySelector('.rain');
     tempDiv.innerHTML += `${weerLeeuwarden.temperatuur10cm}&deg;C`;
     humidityDiv.innerHTML += `Luchtvochtigheid:<br> ${weerLeeuwarden.luchtvochtigheid}%`;
     weerLeeuwarden.regenMMPU === "-" ? rainDiv.innerHTML += '<i class="fa fa-tint" aria-hidden="true"></i> 0 mm per uur' : rainDiv.innerHTML += `<i class="fa fa-tint" aria-hidden="true"></i> ${weerLeeuwarden.regenMMPU}mm per uur`;
-    windforceDiv.innerHTML += `Wind:<br>${weerLeeuwarden.windsnelheidBF} ${weerLeeuwarden.windrichting}`;
 
-    const hand = document.querySelector('.hand');
+    // Windrichting en windkracht in kompasroos zetten
+    const hand = document.querySelector('.compass__hand');
+    const force = document.querySelector('.compass__force');
     hand.style.transform = `rotate(${Number(weerLeeuwarden.windrichtingGR) + 90}deg)`;
-    console.log(Number(weerLeeuwarden.windrichtingGR));
+    force.innerHTML = weerLeeuwarden.windsnelheidBF;
+    //console.log(Number(weerLeeuwarden.windrichtingGR));
   }
 
-  //Google fonts api
+  //Google fonts api data laden
   let fontsJSON = [];
   fetch('https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyCpzoJ552LlaWQyYh4LTYHM9mZLziZBBCc')
     .then(data => data.json())
@@ -63,10 +65,11 @@ window.addEventListener('load', function () {
       randomFont();
     });
 
+  // random font uit google fonts data selecteren + naam en stijl toevoegen aan grid
   function randomFont() {
     const random = getRandomInt(0, fontsJSON.length);
     const fontObject = fontsJSON[random];
-    console.log(fontObject);
+    //console.log(fontObject);
 
     const headStyles = document.querySelector('style')
     headStyles.innerHTML += `@font-face {font-family: ${fontObject.family}; src: url(${fontObject.files.regular})`;
@@ -74,15 +77,16 @@ window.addEventListener('load', function () {
     fontDiv.style.fontFamily = `"${fontObject.family}"`;
     const fontDivTitle = document.querySelector('.fontName');
     fontDivTitle.innerHTML += `Font family: ${fontObject.family}<br>Varianten: ${fontObject.variants.join(", ")}`;
-
   }
 
+  // random nummer tussen min en max genereren
   function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
+  // als er geen verbinding is, een error bericht laten zien
   if (!navigator.onLine) {
     tempDiv.innerHTML = "Geen verbinding";
-  };
+  }
 
 });

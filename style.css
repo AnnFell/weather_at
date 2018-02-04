@@ -12,7 +12,28 @@
 body, html {
     box-sizing:border-box;
 }
-
+@media (max-width: 1024px){
+    body {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        grid-template-rows:repeat(auto-fit, minmax(100px, 1fr));
+        grid-column-gap: 20px;
+        grid-row-gap: 20px;
+        padding:20px;
+    }
+    .grid {
+        grid-column-start: span 1;
+        background-color: var(--white);
+        padding:20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .googleFontSample{
+        font-size: 16px;
+        grid-column-start: span 4;
+    }
+}
 body {
     background-color:var(--lightgrey);
     font-family: 'Oxygen', sans-serif;
@@ -32,6 +53,8 @@ i {
     margin-right:10px;
 }
 .grid {
+    grid-column-start: span 2;
+    grid-row-start: span 2;
     background-color: var(--white);
     padding:20px;
     display: flex;
@@ -45,9 +68,6 @@ i {
 .date {
     font-size: 3vw;
     font-style: italic;
-}
-.windforce{
-
 }
 .windDirection {
     /*grid-column-start: span 2;*/
@@ -94,5 +114,5 @@ i {
 }
 .googleFontSample{
     font-size: 20px;
-    grid-column-start: span 3;
+    grid-column-start: span 4;
 }

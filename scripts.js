@@ -27,7 +27,6 @@ window.addEventListener('load', function () {
   fetch('https://api.buienradar.nl/data/public/1.1/jsonfeed')
     .then(data => data.json())
     .then(data => {
-      console.log(data);
       weer = data;
       actiesWeerData();
     });
@@ -36,7 +35,6 @@ window.addEventListener('load', function () {
     // weergegevens voor Leeuwarden uit weerdata halen
     const actueelWeer = weer.buienradarnl.weergegevens.actueel_weer.weerstations.weerstation;
     const weerLeeuwarden = actueelWeer[25];
-    //console.log(weerLeeuwarden);
 
     // data voor temperatuur, luchtvochtigheid en regen in gridblokjes zetten
     const tempDiv = document.querySelector('.temp');
@@ -59,9 +57,7 @@ window.addEventListener('load', function () {
   fetch('https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyCpzoJ552LlaWQyYh4LTYHM9mZLziZBBCc')
     .then(data => data.json())
     .then(data => {
-      console.log(data);
       fontsJSON.push(...data.items);
-      console.log(fontsJSON);
       randomFont();
     });
 
@@ -69,10 +65,11 @@ window.addEventListener('load', function () {
   function randomFont() {
     const random = getRandomInt(0, fontsJSON.length);
     const fontObject = fontsJSON[random];
-    //console.log(fontObject);
 
-    const headStyles = document.querySelector('style')
-    headStyles.innerHTML += `@font-face {font-family: ${fontObject.family}; src: url(${fontObject.files.regular})`;
+    const headStyles = document.querySelector('style');
+    // remove standard http: from url, so browser uses https under ssl automatically
+    const fontURL = fontObject.files.regular.replace(/(^\w+:|^)/, '');
+    headStyles.innerHTML += `@font-face {font-family: ${fontObject.family}; src: url(${fontURL})`;
     const fontDiv = document.querySelector('.googleFontSample');
     fontDiv.style.fontFamily = `"${fontObject.family}"`;
     const fontDivTitle = document.querySelector('.fontName');

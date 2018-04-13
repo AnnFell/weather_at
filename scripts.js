@@ -50,12 +50,28 @@ window.addEventListener('load', function () {
     //getLocation();
     
     function locationWeatherData(latitude, longitude) {
-        // all buienradar stations data
+        // all buienradar stations data (52 stations)
         const allBuienradarStations = buienradarData.buienradarnl.weergegevens.actueel_weer.weerstations.weerstation;
+        // current point = latitude, longitude
+        // data [{index, latitude, longitude},{}]
+        // forEach calculate difference between point & data
+        function diff(a,b){return Math.abs(a-b);}
+        // collect all indexes&calculations in new array
+        // sort array on smallest values
+        // use index to display closest station data
         console.log(allBuienradarStations);
-        allBuienradarStations.sort((a, b) => {
+        let differenceList = [];
 
+        allBuienradarStations.forEach(function(item, index){
+            let currLat = Number(item.lat);
+            let currLon = Number(item.lon);
+            let diffLat = diff(currLat, latitude);
+            let diffLon = diff(currLon, longitude);
+            console.log(diffLat, diffLon);
+            differenceList.push({index, diffLat, diffLon})
         });
+        console.log(differenceList);
+
         //.[n].latGraden en .lonGraden, of lat en lon (xx.xx)
         // naam station: .[n].stationnaam (.#text, .@regio)
         //console.log(actueelWeer);
